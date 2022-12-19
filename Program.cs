@@ -1,207 +1,103 @@
-﻿/* namespace Exercise
+﻿namespace Exercise
 {
-    internal class Program
+    class Queue
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
-        }
-    }
-}*/
+        int FRONT, REAR;
+        List<int> n_List = new List<int>();
 
-namespace single_linked_list
-{
-    // each node consist of the information part and link to the next node
-    class Node
-    {
-        public int rollNumber;
-        public string name;
-        public Node next;
-    }
-
-    class List
-    {
-        Node START;
-        public List()
+        public void insert(int element)
         {
-            START = null;
-        }
-        public void addNote() // add a node in the list
-        {
-            int rollNo;
-            string nm;
-            Console.Write("\nEnter the roll number of the student: ");
-            rollNo = Convert.ToInt32(Console.ReadLine());
-            Console.Write("\nEnter the roll name of the student: ");
-            nm = Console.ReadLine();
-            Node newnode = new Node();
-            newnode.rollNumber = rollNo;
-            newnode.name = nm;
-            // if the node to be inserted is the first node
-            if (START == null || rollNo <= START.rollNumber)
+            if ((FRONT == 0 && REAR == n_List.Capacity) || (FRONT == REAR + 1))
             {
-                if ((START != null) && (rollNo == START.rollNumber))
-                {
-                    Console.WriteLine();
-                    return;
-                }
-                newnode.next = START;
-                START = newnode;
+                Console.WriteLine();
                 return;
             }
-
-            Node previous, current;
-            previous = START;
-            current = START;
-
-            while ((current != null) && (rollNo >= current.rollNumber))
+            if (FRONT == -1)
             {
-                if (rollNo == current.rollNumber)
+                FRONT = 0;
+                REAR = 0;
+            }
+            else
+            {
+                if (REAR == n_List.Count)
                 {
-                    Console.WriteLine();
-                    return;
+                    REAR = 0;
                 }
-
-                previous.next = current;
-                previous.next = newnode;
+                else
+                {
+                    REAR = REAR + 1;
+                }
             }
-            newnode.next = current;
-            previous.next = newnode;
+            n_List.Add(element);
         }
-
-        public bool delNode(int rollNo)
+        public void display()
         {
-            Node previous, current;
-            previous = current = null;
-            if (Search(rollNo, ref previous, ref current) == false)
-                return false;
-            previous.next = current.next;
-            if (current == START)
-                START = START.next;
-            return true;
-        }
-        public bool Search(int rollNo, ref Node previous, ref Node current)
-        {
-            previous = START;
-            current = START;
-            while ((current != null) && (rollNo != current.rollNumber))
+            int FRONT_position = FRONT;
+            int REAR_position = REAR;
+            /*Chceks if the queue  is empty.*/
+            if (FRONT == -1)
             {
-                previous = current;
-                current = current.next;
+                Console.WriteLine("queue is empty\n");
+                return;
             }
-            if (current == null)
-                return false;
-            else
-                return true;
-        }
-        public void Traverse()
-        {
-            if (listEmpty())
-                Console.WriteLine("\nThe records in the list are: ");
             else
             {
-                Console.WriteLine("\nThe records in the list are: ");
-                Node currentNode;
-                for (currentNode = START; currentNode != null;
-                    currentNode = currentNode.next)
-                    Console.Write(currentNode.rollNumber + " "
-                        + currentNode.name + "\n");
+                Console.WriteLine("\nElements in the queue are ......................\n");
+                /* tranverses the queue till the last element present in an array. */
+                while (FRONT_position <= n_List.Capacity)
+                {
+                    Console.Write(n_List.Capacity + " ");
+                    FRONT_position++;
+                }
+                /* set the FRONT position to the first element of the array. */
+                FRONT_position = 0;
+                /* traverse the array till the last element present in the queue. */
+                while (FRONT_position < REAR_position)
+                {
+                    Console.Write(n_List.Capacity + " ");
+                    FRONT_position++;
+                }
                 Console.WriteLine();
             }
         }
-        public bool listEmpty()
+        internal class Program
         {
-            if (START == null)
-                return true;
-            else
-                return false;
-        }
-    }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            List obj = new List();
-            while (true)
+            static void Main(string[] args)
             {
-                try
+                Queue q = new Queue();
+                char choice;
+                while (true)
                 {
-                    Console.WriteLine("\nMENU");
-                    Console.WriteLine("1. Add a record to the list");
-                    Console.WriteLine("2. Delete a record from the list");
-                    Console.WriteLine("3. View all the records in the list");
-                    Console.WriteLine("4. Search for a record in the list");
-                    Console.WriteLine("5. EXIT");
-                    Console.Write("\nEnter your choice (1-5) : ");
-                    char ch = Convert.ToChar(Console.ReadLine());
-                    switch (ch)
+
+
+                    Console.WriteLine("Menu");
+                    Console.WriteLine("A. Insert");
+                    Console.WriteLine("B. Display");
+                    Console.WriteLine("C.");
+                    Console.WriteLine("D.");
+                    Console.WriteLine("Enter your choice (A-D): ");
+                    choice = Convert.ToChar(Console.ReadLine());
+                    Console.WriteLine();
+                    switch (choice)
                     {
-                        case '1':
-                            {
-                                obj.addNote();
-                            }
+                        case 'A':
+                            Console.WriteLine("Enter a number");
+                            int num = Convert.ToInt32(Console.ReadLine());
+                            q.insert(num);
                             break;
-
-                        case '2':
-                            {
-                                if (obj.listEmpty())
-                                {
-                                    Console.WriteLine("\nList is empty");
-                                    break;
-                                }
-                                Console.WriteLine("Enter the roll number of" +
-                                    " the student whose record is to be deleted: ");
-                                int rollNo = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (obj.delNode(rollNo) == false)
-                                    Console.WriteLine("\n Record not found.");
-                                else
-                                    Console.WriteLine("Record with roll number " +
-                                        +rollNo + " Deleted");
-                            }
+                        case 'B':
+                            Console.WriteLine("Display");
+                            q.display();
                             break;
-                        case '3':
-                            {
-                                obj.Traverse();
-                            }
-                            break;
-                        case '4':
-                            {
-                                if (obj.listEmpty() == true)
-                                {
-                                    Console.WriteLine("\nList is empty");
-                                    break;
-                                }
-                                Node previous, current;
-                                previous = current = null;
-                                Console.Write("\nEnter the roll number of the " +
-                                    "Student whole record is to be searched: ");
-                                int num = Convert.ToInt32(Console.ReadLine());
-                                if (obj.Search(num, ref previous, ref current) == false)
-                                    Console.WriteLine("\nRecord not found.");
-                                else
-                                {
-                                    Console.WriteLine("\nRecord not found");
-                                    Console.WriteLine("\nRoll number: " + current.rollNumber);
-                                    Console.WriteLine("\nName: " + current.name);
-                                }
-                            }
-                            break;
-
-                        case '5':
-                            return;
                         default:
                             {
-                                Console.WriteLine("\nInvalid Option");
-                                break;
+                                Console.WriteLine();
                             }
+                            break;
                     }
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("\nCheck for the value enterd");
                 }
             }
         }
     }
 }
+
