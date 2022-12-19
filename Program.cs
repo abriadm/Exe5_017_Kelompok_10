@@ -14,6 +14,23 @@
             abriansyah = null;
             adam = null;
         }
+        public void Insert()
+        {
+            string nm;
+            Node newnode = new Node();
+            Console.WriteLine("Masukan Nama: ");
+            nm = Console.ReadLine();
+            newnode.name = nm;
+            newnode.next = null;
+            if (abriansyah == null)
+            {
+                abriansyah = newnode;
+                adam = newnode;
+                return;
+            }
+            adam.next = newnode;
+            adam = newnode;
+        }
     }
     class Program
     {
