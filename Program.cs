@@ -17,19 +17,32 @@
         public void Insert()
         {
             string nm;
-            Node newnode = new Node();
+            Node temp = new Node();
             Console.WriteLine("Masukan Nama: ");
             nm = Console.ReadLine();
-            newnode.name = nm;
-            newnode.next = null;
+            temp.name = nm;
+            temp.next = null;
             if (abriansyah == null)
             {
-                abriansyah = newnode;
-                adam = newnode;
+                abriansyah = temp;
+                adam = temp;
                 return;
             }
-            adam.next = newnode;
-            adam = newnode;
+            adam.next = temp;
+            adam = temp;
+        }
+        public void Remove()
+        {
+            if (abriansyah == null)
+            {
+                Console.WriteLine("Queue is Empty!!");
+                return;
+            }
+            abriansyah = abriansyah.next;
+            if (abriansyah == null)
+            {
+                adam = null;
+            }
         }
     }
     class Program
