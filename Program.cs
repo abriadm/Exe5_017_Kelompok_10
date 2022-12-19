@@ -44,6 +44,17 @@
                 adam = null;
             }
         }
+        public void Display()
+        {
+            if (abriansyah == null)
+            {
+                Console.WriteLine("Queue is Empty!!");
+                return;
+            }
+            Node display;
+            for (display = abriansyah; display != null; display = display.next)
+                Console.WriteLine(display.name);
+        }
     }
     class Program
     {
